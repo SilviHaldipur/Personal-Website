@@ -1,0 +1,359 @@
+DESIGN SYSTEM
+Silvi Haldipur
+silvi.haldipur.com
+Build instructions for all pages
+Editorial register · pharma commercial executive · v1.0
+
+[Heading1] Introduction
+This document specifies the complete visual system for silvi.haldipur.com — a personal website for a senior pharma commercial executive with twenty years of experience installing new capabilities inside Fortune 500 organizations.
+The visual register is editorial, not corporate. The reference points are Cereal magazine, Aesop, The Row, Le Labo, and FT Weekend supplements — not SaaS landing pages or typical executive personal-brand sites. The audience is Chief Commercial Officers, Chief Experience Officers, and executive recruiters at top-twenty pharma. They pattern-match on visual restraint. Every design decision should signal &quot;next CXO&quot; rather than &quot;consultant for hire.&quot;
+This document specifies five pages: Home, About, Work, Perspectives, and Contact. It begins with the global design tokens (color, typography, layout primitives, components) that apply across every page, then specifies each page in detail. The order matters: read the global system first, then the page-level instructions inherit from it.
+All copy is drawn from Silvi_Haldipur_website_copy_v9_1.docx. The &quot;Change notes&quot; sections at the bottom of that document are internal editorial notes and must not appear on the live site.
+
+[Heading1] Global design tokens
+[Heading2] Color palette
+Use these as CSS variables. Do not introduce any color outside this palette.
+:root {
+  --cream: #F5EDE2;          /* page background */
+  --oxblood: #78281F;        /* primary brand: headlines, CTAs, links */
+  --oxblood-deep: #5C1E17;   /* CTA hover state */
+  --sienna: #B8593A;         /* hero portrait field, large warm blocks */
+  --coral-sienna: #C9633F;   /* answer-lead borders and accent italics */
+  --coral-light: #E89472;    /* italic emphasis on dark grounds */
+  --ink: #2B1810;            /* dark band ground, body type */
+  --ink-soft: #4A2B1F;       /* secondary body text on cream */
+  --rule: rgba(120, 40, 31, 0.15);  /* hairline dividers */
+}
+Rules: never use pure white or pure black anywhere. Sienna and oxblood are the same warm family and belong on the same page. Do not introduce a third unrelated accent. Text on sienna or oxblood grounds is always cream. Text on cream is ink or ink-soft, with oxblood reserved for headlines, links, and emphasis.
+[Heading2] Typography
+Two families only. Sentence case throughout — never Title Case headlines, never ALL CAPS except for small eyebrow labels and nav links.
+:root {
+  --font-serif: &apos;Tiempos Headline&apos;, &apos;Canela&apos;, &apos;GT Sectra&apos;,
+                Georgia, &apos;Times New Roman&apos;, serif;
+  --font-sans:  &apos;Söhne&apos;, &apos;GT America&apos;, &apos;Helvetica Neue&apos;,
+                -apple-system, sans-serif;
+}
+Type scale (desktop / mobile)
+H1 hero  serif, 56px / 36px, weight 400, tracking -0.015em, line-height 1.08
+H2 section  serif, 32px / 26px, weight 400, tracking -0.01em, line-height 1.2
+H3 subsection  serif, 22px / 20px, weight 400, tracking normal, line-height 1.3
+Body  sans, 15px / 15px, weight 400, line-height 1.65
+Body on dark  serif, 20px / 17px, weight 400, line-height 1.55
+Eyebrow label  sans, 12px / 11px, weight 500, uppercase, tracking 0.16em
+Nav link  sans, 14px / 13px, weight 400, uppercase, tracking 0.08em
+CTA  sans, 12px / 12px, weight 500, uppercase, tracking 0.12em
+Headline accent move (critical)
+Italicize one key phrase mid-headline in oxblood. In the homepage hero this is &quot;make it real&quot; — set in serif italic at the same size as the rest of the headline, color var(--oxblood). The non-italic portion is var(--ink). Use this move sparingly: once per page hero, never within body copy.
+[Heading2] Layout primitives
+[ListParagraph] Page background: var(--cream). The site never sits on white.
+[ListParagraph] Section padding: 48px horizontal on desktop, 24px on mobile. Vertical padding varies per section and is specified within each component.
+[ListParagraph] Hairline dividers: 0.5px solid var(--rule). Never thicker.
+[ListParagraph] Corners: 2px maximum on buttons. Cards, sections, and images have no rounded corners.
+[ListParagraph] Shadows: none. No box-shadow anywhere, including focus states. Use a 0.5px outline in oxblood for focus.
+[ListParagraph] Gradients: none, ever.
+[ListParagraph] Max content width for body-text columns: 720px, centered. Hero and visual sections run full-bleed.
+
+[Heading1] Global components
+[Heading2] Top navigation
+[ListParagraph] Sits directly on cream. No background bar, no shadow.
+[ListParagraph] Hairline divider beneath in var(--rule).
+[ListParagraph] Padding: 24px vertical, 48px horizontal.
+[ListParagraph] Layout: name on the left, links on the right, justified to container edges.
+[ListParagraph] Left: &quot;Silvi Haldipur&quot; in serif, 22px, weight 400, color var(--oxblood). Slight italic permitted.
+[ListParagraph] Right: &quot;About · Work · Perspectives · Contact&quot; as separate links in sans 14px uppercase, letter-spacing 0.08em, color var(--ink). Gap between links: 56px.
+[ListParagraph] Active page indicator: 1px var(--oxblood) underline beneath the current section link, 4px below the baseline.
+[Heading2] Primary CTA
+display: inline-block;
+background: var(--oxblood);
+color: var(--cream);
+padding: 18px 28px;
+font: 500 12px/1 var(--font-sans);
+letter-spacing: 0.12em;
+text-transform: uppercase;
+border-radius: 2px;
+text-decoration: none;
+transition: background 150ms ease;
+Hover: background var(--oxblood-deep). Label always includes a trailing arrow with a single space before it (&quot;Read perspectives →&quot;).
+[Heading2] Secondary CTA
+display: inline-block;
+color: var(--oxblood);
+padding: 18px 4px;
+font: 500 12px/1 var(--font-sans);
+letter-spacing: 0.12em;
+text-transform: uppercase;
+text-decoration: none;
+border-bottom: 1px solid var(--oxblood);
+padding-bottom: 6px;
+No fill. The underline is a border-bottom, never text-decoration: underline.
+[Heading2] Dark answer-lead band
+Used to hold front-loaded &quot;GEO answer leads&quot; — the sentences in the copy doc written for AI crawler citation. This component replaces the purple left-border specified in v9.1; the entire site uses coral-sienna for that role.
+[ListParagraph] Background: var(--ink). Full-bleed.
+[ListParagraph] Padding: 64px vertical, 96px horizontal desktop; 40px vertical, 32px horizontal mobile.
+[ListParagraph] Grid: 180px label column, 1fr content column, gap 64px. Stacks at 768px.
+[ListParagraph] Label column: 3px solid var(--coral-sienna) left border, 16px padding-left, eyebrow label in sans 12px uppercase, color var(--coral-sienna), padding-top 4px to align with body cap-height.
+[ListParagraph] Content column: serif 20px, line-height 1.55, color var(--cream). One key phrase italicized in var(--coral-light).
+[Heading2] Eyebrow + section heading + body (standard content block)
+The default content unit on cream backgrounds. Used for every standard section across the site.
+[ListParagraph] Eyebrow label in sans 12px uppercase, color var(--oxblood). Margin-bottom: 16px.
+[ListParagraph] Section heading (H2) in serif 32px, color var(--oxblood). Margin-bottom: 24px.
+[ListParagraph] Body in sans 15px, color var(--ink-soft). Max-width 720px.
+[ListParagraph] Section vertical padding: 80px top and bottom on desktop, 56px on mobile.
+[Heading2] Credentials / launches strip
+[ListParagraph] Four-column grid on desktop, two-column at 768px, single-column at 480px.
+[ListParagraph] Cells separated by 1px gaps in var(--rule), achieved by setting the grid container background to var(--rule) and child backgrounds to var(--cream).
+[ListParagraph] Per cell: padding 24px top, 18px right, 0 bottom, 24px left. First cell has 0 left padding to align with section grid.
+[ListParagraph] Brand or category name: serif 24px, weight 400, color var(--oxblood). Margin-bottom: 10px.
+[ListParagraph] Descriptor: sans 13px, line-height 1.5, color var(--ink-soft).
+[Heading2] Logo grid
+[ListParagraph] All logos rendered in a single tonal value: var(--ink-soft).
+[ListParagraph] No group headings on the live site (the copy doc shows groups for internal reference only).
+[ListParagraph] Grid spacing: 48px minimum gap.
+[ListParagraph] Logos sized to optical balance, not pixel uniformity. Aim for visual weight parity rather than equal height.
+[ListParagraph] Grayscale or single-tone treatment only — no full-color logos.
+[Heading2] Footer
+[ListParagraph] Background: var(--ink) on every page.
+[ListParagraph] Padding: 80px top, 48px bottom, 48px horizontal.
+[ListParagraph] Name in serif 28px, color var(--cream).
+[ListParagraph] Tagline beneath in sans 13px, color var(--coral-light): &quot;Commercial executive. Life sciences and consumer health.&quot;
+[ListParagraph] Location line in sans 13px, color rgba(245, 237, 226, 0.6): &quot;Greater Philadelphia&quot;.
+[ListParagraph] Hairline divider in rgba(245, 237, 226, 0.15).
+[ListParagraph] Site map: section links in sans 13px uppercase, color var(--cream), letter-spacing 0.08em, separated by middle dots.
+[ListParagraph] Social and email links in sans 13px, color var(--coral-light).
+[ListParagraph] Copyright: sans 11px, color rgba(245, 237, 226, 0.5), bottom-left aligned.
+
+[Heading1] 01 — Home
+The most strategically important page. Most recruiters and CCOs will form their impression here. Build the hero with the most care; the rest of the page inherits from established components.
+[Heading2] Hero
+Asymmetric two-column layout, full-bleed.
+[ListParagraph] Grid: grid-template-columns 1.4fr 1fr on desktop. Stacks to single column at 768px (portrait moves above copy).
+[ListParagraph] Minimum height: 720px desktop, auto on mobile.
+[ListParagraph] No gap between columns — the sienna field meets the cream field with a hard vertical edge. This edge is the design.
+[Heading3] Left column (cream ground)
+[ListParagraph] Padding: 80px top, 72px right, 80px bottom, 96px left.
+[ListParagraph] Vertical alignment: top. Content starts near the top of the column, does not center.
+[ListParagraph] Eyebrow label &quot;Commercial executive · Life sciences and consumer health&quot; in sans 12px uppercase, color var(--coral-sienna). Margin-bottom: 40px.
+[ListParagraph] H1: serif 56px, weight 400, line-height 1.08, color var(--ink). The phrase &quot;make it real&quot; set in italic, color var(--oxblood). Followed by a non-italic ink period. Margin-bottom: 40px. Allow the headline to wrap freely across multiple lines — its broken rhythm is intentional.
+[ListParagraph] Subhead: sans 15px, line-height 1.65, color var(--ink-soft). Max-width 92% of column. Margin-bottom: 48px.
+[ListParagraph] CTA row: primary CTA (&quot;Read perspectives →&quot;) + secondary CTA (&quot;Get in touch&quot;), gap 24px, vertically center-aligned.
+[Heading3] Right column (sienna ground)
+[ListParagraph] Background: var(--sienna). Solid fill, no gradient.
+[ListParagraph] Extends from the top of the hero to the bottom with no padding around the sienna fill — it is a hard rectangle of color.
+[ListParagraph] SH monogram top-right: &quot;S H&quot; in serif 18px, color var(--cream), letter-spacing 0.4em, opacity 0.85. Position: 36px from top, 40px from right.
+[ListParagraph] Portrait: B&amp;W photograph placed directly on the sienna with no border, frame, padding, or shadow. Width approximately 62% of the column, aspect ratio 3:4. Aligned: right edge 80px from column right edge; bottom edge 80px from hero bottom.
+[Heading2] Who Silvi Haldipur is (dark answer-lead band)
+Uses the dark answer-lead band component. Content:
+[ListParagraph] Label: &quot;Who she is&quot;
+[ListParagraph] Body: &quot;Silvi Haldipur is a commercial executive in life sciences and consumer health with twenty years of experience installing the next commercial capability inside Fortune 500 organizations before consensus, and building the operating discipline to make it last.&quot;
+[ListParagraph] Italic emphasis (var(--coral-light)) on: &quot;before consensus&quot;
+[Heading2] Launches that have defined categories
+Uses the credentials strip component. Cells:
+[ListParagraph] Plavix — First DTC launch in pharma history
+[ListParagraph] Dupixent — Category-defining biologic in asthma
+[ListParagraph] Flonase — #1 OTC share, $4B+ category
+[ListParagraph] Sotatercept — Time-to-treat cut 62.5%
+Eyebrow above the strip: &quot;Launches that have defined categories&quot;.
+[Heading2] What she has built (three modes)
+Three-column grid on cream. Eyebrow + three serif H3 cards stacked beneath, each with a sans descriptor.
+[ListParagraph] Eyebrow: &quot;What she has built&quot;
+[ListParagraph] Subhead (serif 22px): &quot;Three modes of work, applied consistently across two decades.&quot;
+[ListParagraph] Grid: three columns, gap 48px, 80px top margin on the grid.
+[ListParagraph] Each card: serif H3 24px in var(--oxblood), 16px below it a sans 14px paragraph in var(--ink-soft), max-width 100% of column.
+[ListParagraph] Card 1 — &quot;New commercial capabilities&quot; — Customer experience installed as a commercial discipline at Merck. Agile and human-centered design embedded into pharma commercial operations across six markets. A consumer segmentation platform commercialized by Experian. Behavioral intelligence with AI at Novo Nordisk.
+[ListParagraph] Card 2 — &quot;Launches that defined categories&quot; — First DTC launch in pharma (Plavix). Dupixent in asthma. Flonase Rx-to-OTC delivering #1 OTC market share. Sotatercept PAH with time-to-treat cut 62.5%. First Quality ingredient brand strategy as industry first.
+[ListParagraph] Card 3 — &quot;Operating models built to last&quot; — Merck&apos;s first Center of Co-Creation, still in use. The Global Human Health Digital Accelerator across six priority markets, with digital competencies built into job descriptions for new commercial hires.
+[ListParagraph] No card borders, no card backgrounds. Cards separated only by gap.
+[Heading2] Selected work
+Eyebrow + four case links. Use the credentials strip layout but with serif case titles and small &quot;Case 01&quot; labels above each.
+[ListParagraph] Each cell: small sans 11px label &quot;Case 01&quot; (etc.) in var(--coral-sienna), then serif 18px case title in var(--oxblood), then sans 13px descriptor in var(--ink-soft).
+[ListParagraph] Case 01: Merck Center of Co-Creation — a new function for customer-led decision making.
+[ListParagraph] Case 02: Sotatercept PAH launch — redesigning the patient journey to cut time-to-treat by 62.5%.
+[ListParagraph] Case 03: Flonase Rx-to-OTC — disrupting a $4B+ category with behavioral insight and digital-first engagement.
+[ListParagraph] Case 04: Global Human Health Digital Accelerator — embedding digital capability across six markets.
+[ListParagraph] Each case links to its full page on /work.
+[Heading2] Featured perspectives
+Two-column list of perspective titles. Each title is a link to the full perspective on /perspectives.
+[ListParagraph] Eyebrow: &quot;Featured perspectives&quot;
+[ListParagraph] Two-column grid, gap 64px, 8 titles total.
+[ListParagraph] Each title: serif 20px in var(--oxblood), border-bottom 0.5px solid var(--rule), padding-bottom 16px, padding-top 16px.
+[ListParagraph] Titles per copy doc: Capacity is the bottleneck. Strategy is only as good as the behavior it observes. Reliability is the highest form of empathy. Persistence is the next commercial unlock in pharma. Thick data versus thin signal. Why CX in pharma keeps becoming an elective. The structural case for a CXO seat in pharma. Capability installation versus capability advisory.
+[Heading2] The keynote (pull-quote band)
+Full-width band on var(--sienna). Centered serif italic pull-quote in var(--cream), 32px, line-height 1.3. Smaller sans attribution beneath in var(--cream) at 60% opacity.
+[ListParagraph] Padding: 96px vertical, 96px horizontal.
+[ListParagraph] Pull-quote: &quot;How many of you have a patient-centric mission? How many of you are compensated for the quality of the experience?&quot;
+[ListParagraph] Attribution: &quot;You Are Not Broken, The System Is. 2026 PanAgora Pharma CX Summit.&quot;
+[ListParagraph] Secondary CTA beneath: &quot;Read the keynote summary →&quot;
+[Heading2] Built and delivered for (logo grid)
+Uses the logo grid component. Eyebrow: &quot;Built and delivered for&quot;. Sixteen logos in single-tone var(--ink-soft), no group headings.
+
+[Heading1] 02 — About
+[Heading2] Hero
+Cream ground only — no sienna field on this page. The About hero is text-led.
+[ListParagraph] Padding: 120px top, 48px horizontal, 96px bottom.
+[ListParagraph] Eyebrow: &quot;About&quot; in sans 12px uppercase, var(--coral-sienna).
+[ListParagraph] H1: serif 56px, weight 400, color var(--ink). &quot;A career spent building what didn&apos;t exist before.&quot;
+[ListParagraph] Subhead: sans 16px, line-height 1.65, color var(--ink-soft), max-width 640px.
+[ListParagraph] Subhead text per copy doc: &quot;Silvi Haldipur is a commercial executive in life sciences and consumer health whose work has consistently arrived before the industry had a name for it. Twenty years across Fortune 500 organizations. The pattern is conviction at the early window, and the operating discipline to make it last.&quot;
+[Heading2] The operator&apos;s through line
+Editorial long-form section on cream. Uses the standard content block, but with a max-width of 720px and serif drop-cap on the opening paragraph.
+[ListParagraph] Eyebrow: &quot;The operator&apos;s through line&quot;
+[ListParagraph] Body in sans 16px, line-height 1.75, color var(--ink-soft).
+[ListParagraph] Drop-cap on the first paragraph: serif 72px, weight 400, color var(--oxblood), float-left, margin 6px 12px 0 0, line-height 0.85.
+[ListParagraph] Pull-quote inset after the opening paragraph: serif italic 24px, color var(--oxblood), max-width 560px, with a 3px solid var(--coral-sienna) left border, padding-left 24px, margin 32px 0.
+[ListParagraph] Pull-quote text: &quot;Building commercial organizations that are smarter, faster, and more human is not a design challenge or a technology challenge or a change management challenge. It is all three, at once.&quot;
+[Heading2] How she operates (five named modes)
+Section on cream. Eyebrow + H2 &quot;How she operates&quot; + five mode cards stacked vertically, separated by hairline dividers.
+[ListParagraph] Each mode block: small sans 11px counter (&quot;01&quot;, &quot;02&quot;, etc.) in var(--coral-sienna), serif H3 24px name in var(--oxblood), sans 15px body in var(--ink-soft) max-width 640px.
+[ListParagraph] Counter sits in a 60px left gutter; the name and body sit in the main column. This creates a numbered editorial feel without using a numbered list.
+[ListParagraph] Hairline divider 0.5px var(--rule) between modes, 48px padding above and below.
+[ListParagraph] Five modes per copy doc: Conviction at the early window. Dynamic range from strategy to execution. Building inside the organization, not around it. Leading high-performing teams through ambiguity. Customer truth as the operating compass.
+[Heading2] Domain depth
+Section on cream with four subsections: Geographic experience, Therapeutic areas, Healthcare ecosystem, Industries. Each subsection uses an eyebrow + body or eyebrow + tag list.
+[Heading3] Geographic experience
+[ListParagraph] Eyebrow + two-paragraph body (sans 15px, color var(--ink-soft)) per copy doc.
+[Heading3] Therapeutic areas, Healthcare ecosystem, Industries (tag list pattern)
+[ListParagraph] Each subsection has an eyebrow label (sans 12px uppercase, var(--oxblood)).
+[ListParagraph] Tags rendered as serif 18px in var(--oxblood), separated by middle dots, wrapping naturally. Not pills, not chips — just text separated by dots.
+[ListParagraph] Example layout: &quot;Obesity · Diabetes · Cardiovascular disease · Neuroscience · Oncology · Biosimilars · Vaccines · Infectious disease · Respiratory · Gastroenterology · Medical devices · Dermatology · Mental health&quot;
+[Heading2] Core expertise
+Final About-page section. Same tag-list pattern as therapeutic areas. Eyebrow + serif 18px var(--oxblood) tags separated by middle dots.
+[ListParagraph] Tags: Commercial leadership · Capability installation and operating model design · Launch excellence · DTC and Rx-to-OTC strategy · Customer experience as a commercial discipline · AI and behavioral intelligence · Human-centered design · Agile in commercial operations · Measurement and governance · C-suite advisory
+
+[Heading1] 03 — Work
+[Heading2] Hero
+[ListParagraph] Same hero pattern as About — text-led on cream, no sienna field.
+[ListParagraph] Eyebrow: &quot;Work&quot;
+[ListParagraph] H1: &quot;Selected work.&quot;
+[ListParagraph] Subhead: &quot;Four builds. Each one a capability brought into pharma commercial before consensus, designed around customer truth, and still running after the work was done.&quot;
+[Heading2] Case index
+Below the hero, a four-row index of cases. Each row is a horizontal band linking to a full case page (/work/case-01, etc.).
+[ListParagraph] Each row: full-bleed width, padding 48px vertical, 48px horizontal. Cream background, hairline divider top and bottom in var(--rule).
+[ListParagraph] Three-column grid per row: 80px counter column, 1fr content column, 200px hover-arrow column.
+[ListParagraph] Counter: serif 48px in var(--coral-sienna), weight 400, e.g. &quot;01&quot;.
+[ListParagraph] Content: small sans 11px theme label in var(--coral-sienna) (e.g. &quot;A new commercial function&quot;), serif 28px case title in var(--oxblood), sans 15px one-line outcome in var(--ink-soft).
+[ListParagraph] Hover state: row background becomes var(--cream) with a 0.5px var(--oxblood) outline; counter becomes var(--oxblood). 200ms ease transition.
+[ListParagraph] Hover-arrow column: &quot;View case →&quot; in sans 12px uppercase var(--oxblood), right-aligned, visible only on hover.
+[Heading2] Case study page template
+Used for /work/case-01 through /work/case-04. Long-form editorial layout.
+[Heading3] Case hero
+[ListParagraph] Cream ground. Padding 120px top, 96px bottom, 48px horizontal.
+[ListParagraph] Small sans 11px theme + tenure label in var(--coral-sienna): e.g. &quot;Theme: a new commercial function · Tenure: Merck&quot;.
+[ListParagraph] Serif 48px case title in var(--oxblood).
+[ListParagraph] Subhead: serif 20px in var(--ink), max-width 720px, line-height 1.4. This is the front-loaded answer paragraph from the copy doc.
+[Heading3] Case body (three subsections)
+[ListParagraph] Three subsections in a single editorial column, max-width 720px, centered: &quot;The situation,&quot; &quot;What Silvi and team built,&quot; &quot;The outcome.&quot;
+[ListParagraph] Each subsection title set as an oxblood eyebrow (sans 12px uppercase, color var(--oxblood), tracking 0.16em), NOT as a serif H3. The eyebrow + body pattern keeps the body reading as continuous editorial prose.
+[ListParagraph] Body: sans 16px, line-height 1.75, color var(--ink-soft). Paragraph spacing 1.5em.
+[ListParagraph] Pull a single key metric from the outcome paragraph and set it as a serif 40px display number in var(--oxblood) inset to the right of the body column, with a sans 13px label beneath in var(--ink-soft). Example: &quot;62.5%&quot; / &quot;reduction in time-to-treat&quot;.
+[Heading3] Case footer
+[ListParagraph] Dark band in var(--ink), full-bleed, padding 64px vertical.
+[ListParagraph] Two-column layout: left column shows next case as small sans label + serif case title; right column shows &quot;Return to selected work →&quot; link in coral-sienna sans 12px uppercase.
+[Heading2] Case content (per copy doc)
+Case 01 — Merck Center of Co-Creation
+Theme: a new commercial function. Tenure: Merck.
+Answer lead: &quot;Silvi built Merck&apos;s first Center of Co-Creation, a turnkey enterprise function that integrated customer co-creation into agile commercial decision-making. The outcome was 100% adoption across mature digital execution teams, a 50%+ reduction in time from customer feedback to action, and over $1B in incremental revenue supported across the campaign portfolio.&quot;
+Display metric: &quot;$1B+&quot; / &quot;incremental revenue supported&quot;.
+Case 02 — Sotatercept PAH launch
+Theme: launch excellence through journey redesign. Tenure: Merck.
+Answer lead: &quot;Silvi led journey-level intervention design on the Sotatercept launch in pulmonary arterial hypertension, reducing time-to-treat by 62.5%.&quot;
+Display metric: &quot;62.5%&quot; / &quot;reduction in time-to-treat&quot;.
+Case 03 — Flonase Rx-to-OTC launch
+Theme: category disruption through behavioral insight. Tenure: GSK.
+Answer lead: &quot;Silvi contributed to the Flonase Rx-to-OTC launch that disrupted a $4B+ OTC allergy category dominated by oral antihistamines and achieved #1 market share.&quot;
+Display metric: &quot;#1&quot; / &quot;OTC market share, $4B+ category&quot;.
+Case 04 — Global Human Health Digital Accelerator
+Theme: operating model redesign. Tenure: Merck.
+Answer lead: &quot;Silvi led the Global Human Health Digital Accelerator, embedding digital, advanced analytics, agile methods, and experience design into Merck&apos;s commercial operating model across six priority international markets.&quot;
+Display metric: &quot;6&quot; / &quot;priority markets&quot;.
+
+[Heading1] 04 — Perspectives
+[Heading2] Hero
+[ListParagraph] Cream ground, same pattern as About and Work.
+[ListParagraph] Eyebrow: &quot;Perspectives&quot;
+[ListParagraph] H1: &quot;Care That Works.&quot;
+[ListParagraph] Subhead per copy doc: &quot;A framework, an argument, and a body of writing on what it actually takes to bridge the gap between strategy and execution in life sciences, and on where the next operating model for pharma commercial is going.&quot;
+[Heading2] The argument (dark band, extended)
+Full-bleed band on var(--ink), but taller than the standard answer-lead band — this is the central argument of the entire site.
+[ListParagraph] Padding: 120px vertical, 96px horizontal.
+[ListParagraph] Grid: 180px label column + 1fr content column, gap 64px.
+[ListParagraph] Label: &quot;The argument&quot; in sans 12px uppercase, color var(--coral-sienna), 3px var(--coral-sienna) left border.
+[ListParagraph] Content: serif 24px, line-height 1.55, color var(--cream), max-width 720px.
+[ListParagraph] Italic emphasis in var(--coral-light) on the critical phrases: &quot;structural reasons, not creative ones&quot; and &quot;the operating layer.&quot;
+[Heading2] The four principles (named cards)
+Four-card grid on cream. Each principle gets its own card.
+[ListParagraph] Eyebrow: &quot;The four principles of Care That Works&quot;
+[ListParagraph] Grid: 2x2 on desktop (gap 48px), single column on mobile.
+[ListParagraph] Each card: cream background, no border, no shadow.
+[ListParagraph] Card structure: small sans 11px counter (&quot;01&quot;, &quot;02&quot;, etc.) in var(--coral-sienna), serif 28px principle name in var(--oxblood), sans 15px body in var(--ink-soft), line-height 1.65, max-width 100%.
+[ListParagraph] Card padding: 32px right (to create breathing room before the next card), 0 elsewhere.
+[ListParagraph] Principle 01 — Capacity. &quot;Transformation isn&apos;t a failure of vision. It&apos;s a failure of capacity. Most organizations have the empathy to start a change but lack the operational hardcoding to sustain it.&quot;
+[ListParagraph] Principle 02 — Thick data. &quot;Strategy is only as good as the behavior it observes. Thin data produces thin results. Thick behavioral data identifies the specific human friction points that drain a system&apos;s capacity.&quot;
+[ListParagraph] Principle 03 — Culture sync. &quot;You cannot scale care through a fractured culture. Employee experience is the ceiling of outcome performance. When culture and process are synchronized, excellence becomes the default output and throughput rises without adding headcount.&quot;
+[ListParagraph] Principle 04 — Hardcoding. &quot;Reliability is the highest form of empathy. Individual heroism doesn&apos;t scale. Hardcoding care into the operating model means aligning technology and process so the right path for the customer is the easiest path for staff.&quot;
+[Heading2] What&apos;s next: persistence-based care design
+Standard content block on cream, single editorial column max-width 720px.
+[ListParagraph] Eyebrow: &quot;What&apos;s next&quot;
+[ListParagraph] H2: &quot;Persistence-based care design.&quot;
+[ListParagraph] Body in sans 16px, line-height 1.75, color var(--ink-soft).
+[ListParagraph] Secondary CTA at the end: &quot;Read the framework →&quot;
+[Heading2] The keynote (long-form summary)
+Cream ground, single editorial column, max-width 720px.
+[ListParagraph] Eyebrow: &quot;The keynote&quot;
+[ListParagraph] Serif italic 28px attribution line in var(--oxblood): &quot;You Are Not Broken, The System Is. 2026 PanAgora Pharma CX Summit. March 25, 2026.&quot;
+[ListParagraph] Body in sans 16px, line-height 1.75. Use the four-paragraph keynote summary from the copy doc verbatim.
+[ListParagraph] Closing line set as serif italic 22px in var(--oxblood), centered, with 64px top margin: &quot;The system is broken. No one in the room is powerless.&quot;
+[Heading2] Writing (article index)
+Final section. Two-column list of all published essays.
+[ListParagraph] Eyebrow: &quot;Writing&quot;
+[ListParagraph] Subhead: &quot;Essays and longer pieces on the operating layer of pharma commercial. New writing posted as it is completed.&quot;
+[ListParagraph] Each article entry: small sans 11px date in var(--coral-sienna), serif 22px title in var(--oxblood), sans 14px one-line summary in var(--ink-soft), hairline divider 0.5px var(--rule) beneath, padding 24px vertical.
+[ListParagraph] Aim for 8 to 12 evergreen pieces per the copy doc, refreshed quarterly.
+
+[Heading1] 05 — Contact
+[Heading2] Hero
+[ListParagraph] Cream ground, same pattern as other inner pages.
+[ListParagraph] Eyebrow: &quot;Contact&quot;
+[ListParagraph] H1: &quot;Get in touch.&quot;
+[ListParagraph] No subhead. The page is short and intentional — the headline does the work.
+[Heading2] Contact block
+Three-row contact list, generous spacing, no card or container.
+[ListParagraph] Padding: 96px top, 120px bottom, 48px horizontal.
+[ListParagraph] Max-width 720px, centered.
+[ListParagraph] Each row: small sans 12px uppercase label in var(--coral-sienna) (&quot;For executive opportunities,&quot; &quot;For speaking and advisory,&quot; &quot;For everything else&quot;), then serif 24px email link in var(--oxblood).
+[ListParagraph] Row spacing: 48px between rows.
+[ListParagraph] Email links: no underline by default. Hover state: 1px var(--oxblood) border-bottom.
+[Heading2] Connect band
+Below the contact block, a sienna full-bleed band with LinkedIn and any other professional links.
+[ListParagraph] Background: var(--sienna). Full-bleed.
+[ListParagraph] Padding: 80px vertical, 48px horizontal.
+[ListParagraph] Centered content. Serif 22px in var(--cream): &quot;Connect on LinkedIn.&quot;
+[ListParagraph] LinkedIn URL as secondary CTA beneath: &quot;linkedin.com/in/silvihaldipur →&quot; in sans 12px uppercase var(--cream), 1px var(--cream) border-bottom.
+
+[Heading1] Handoff notes
+[Heading2] Copy source
+All copy is in Silvi_Haldipur_website_copy_v9_1.docx. Use verbatim. Do not paraphrase. The &quot;Change notes&quot; sections at the bottom of that document are internal editorial notes and must not appear on the live site.
+[Heading2] Assets needed before build
+[ListParagraph] Final B&amp;W portrait at minimum 2400px wide, with the subject placed for right-edge alignment in the hero.
+[ListParagraph] Sixteen client logos in single-color SVG (will be re-colored to var(--ink-soft) via CSS).
+[ListParagraph] Web fonts licensed for production: Tiempos Headline (or Canela / GT Sectra alternative) and Söhne (or GT America / Helvetica Neue alternative).
+[Heading2] Definition of done (site-wide)
+[ListParagraph] Cream page background visible on every page — no white surfaces anywhere.
+[ListParagraph] All type is in the two specified families with the correct scale.
+[ListParagraph] Portrait sits on a sienna ground with no border, frame, padding, or shadow.
+[ListParagraph] Dark answer-lead bands render on var(--ink) with coral-sienna left borders, replacing the purple specified in v9.1.
+[ListParagraph] No shadows, gradients, or rounded corners over 2px appear anywhere.
+[ListParagraph] Sentence case throughout — no Title Case headlines, no ALL CAPS except eyebrows and nav links.
+[ListParagraph] Italicized accent phrases in oxblood appear once per page hero, never within body copy.
+[ListParagraph] When scrolled at speed, each page reads as a magazine spread, not a SaaS landing page.
+[Heading2] What to avoid (site-wide prohibitions)
+[ListParagraph] White backgrounds anywhere.
+[ListParagraph] Stock photography.
+[ListParagraph] Decorative icons in body content (the site is text-led).
+[ListParagraph] Card layouts with shadows, borders, or rounded corners.
+[ListParagraph] Gradients of any kind.
+[ListParagraph] Rounded corners above 2px.
+[ListParagraph] Any third type family beyond the specified serif and sans.
+[ListParagraph] Any color outside the palette tokens.
+[ListParagraph] Title Case headlines.
+[ListParagraph] text-decoration: underline — always use border-bottom.
+[ListParagraph] Frames or borders around the portrait.
+[ListParagraph] The word &quot;innovative&quot; anywhere in UI copy or microcopy.
