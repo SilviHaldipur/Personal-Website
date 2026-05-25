@@ -1,0 +1,212 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": "https://silvihaldipur.com/#profile-page",
+      "url": "https://silvihaldipur.com",
+      "name": "Silvi Haldipur — Commercial Executive, Life Sciences and Consumer Health",
+      "description": "Silvi Haldipur is a commercial executive in life sciences and consumer health with twenty years of experience installing the next commercial capability inside Fortune 500 organizations before consensus, and building the operating discipline to make it last. Her work spans launches that have defined categories, new commercial functions, operating model redesigns, and behavioral data systems across both US and international commercial operations in six priority markets.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://silvihaldipur.com/#website"
+      },
+      "mainEntity": {
+        "@id": "https://silvihaldipur.com/#silvi"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://silvihaldipur.com/assets/silvi-portrait.jpg",
+        "caption": "Silvi Haldipur, commercial executive in life sciences and consumer health"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://silvihaldipur.com/#website",
+      "url": "https://silvihaldipur.com",
+      "name": "Silvi Haldipur",
+      "description": "Personal site of Silvi Haldipur, commercial executive in life sciences and consumer health.",
+      "publisher": {
+        "@id": "https://silvihaldipur.com/#silvi"
+      },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://silvihaldipur.com/#silvi",
+      "name": "Silvi Haldipur",
+      "givenName": "Silvi",
+      "familyName": "Haldipur",
+      "url": "https://silvihaldipur.com",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://silvihaldipur.com/assets/silvi-portrait.jpg",
+        "caption": "Silvi Haldipur"
+      },
+      "jobTitle": "Commercial Executive, Life Sciences and Consumer Health",
+      "description": "Silvi Haldipur is a commercial executive with twenty years of experience building the capabilities the pharma and consumer health industries had not yet named. Her work installs the next commercial capability inside Fortune 500 organizations before consensus and builds the operating discipline to make it last. The pattern spans customer experience as a commercial discipline, agile in commercial operations, advanced consumer segmentation, AI-powered behavioral intelligence, and persistence-based care design.",
+      "knowsAbout": [
+        "Pharmaceutical commercial strategy",
+        "Life sciences commercial operations",
+        "Consumer health commercialization",
+        "Customer experience as a commercial discipline",
+        "Operating model design",
+        "Launch excellence",
+        "Direct-to-consumer pharmaceutical marketing",
+        "Rx-to-OTC transition strategy",
+        "Behavioral intelligence and AI",
+        "Persistence-based care design",
+        "Patient journey design",
+        "Agile in commercial operations",
+        "Human-centered design",
+        "Customer co-creation",
+        "Digital transformation in pharma",
+        "Capability installation",
+        "Enterprise transformation"
+      ],
+      "hasOccupation": {
+        "@type": "Occupation",
+        "name": "Commercial Executive",
+        "occupationalCategory": "Pharmaceutical Commercial Leadership",
+        "skills": "Commercial leadership; capability installation and operating model design; launch excellence; DTC and Rx-to-OTC strategy; customer experience as a commercial discipline; AI and behavioral intelligence; human-centered design; agile in commercial operations; measurement and governance; C-suite advisory"
+      },
+      "alumniOf": [
+        {
+          "@type": "Organization",
+          "name": "Merck"
+        },
+        {
+          "@type": "Organization",
+          "name": "GSK"
+        }
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Novo Nordisk"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/silvihaldipur"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "PA",
+        "addressLocality": "Greater Philadelphia",
+        "addressCountry": "US"
+      },
+      "subjectOf": [
+        {
+          "@type": "Article",
+          "headline": "Who will be Pharma's A.G. Lafley?",
+          "url": "https://www.linkedin.com/pulse/who-pharmas-ag-lafley-silvi-haldipur-kocse/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "Beyond the Silo: Why 2026 is the Year of the Pharmaceutical CXO",
+          "url": "https://www.linkedin.com/pulse/beyond-silo-why-2026-year-pharmaceutical-cxo-silvi-haldipur-j99ue/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "The Retention Multiplier: Why the Next Phase of Pharma Growth is Persistence-Based Care Design",
+          "url": "https://www.linkedin.com/pulse/retention-multiplier-why-next-phase-pharma-growth-design-haldipur-20due/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "From Prescription Drug to Pharmacy Aisle: How Flonase Became the #1 Nasal Allergy Spray",
+          "url": "https://www.linkedin.com/pulse/from-prescription-drug-pharmacy-aisle-how-flonase-became-haldipur-7aowe/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "The War for Access Is Over. The War Against Operational Burden Has Begun.",
+          "url": "https://www.linkedin.com/pulse/war-access-over-against-operational-burden-has-begun-silvi-haldipur-nww9e/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "The Four Conversations That Turn CX Teams Into Business Partners After the Product Launches",
+          "url": "https://www.linkedin.com/pulse/three-conversations-turn-cx-teams-business-partners-after-haldipur-efdwf/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "The $2M Patient Portal No One Uses: Why Healthcare CX Investments Fail",
+          "url": "https://www.linkedin.com/pulse/2m-patient-portal-one-uses-why-healthcare-cx-fail-silvi-haldipur-ff3jf/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "Beyond the Creepy Chart Note: Why n=1 Personalization is Failing Healthcare",
+          "url": "https://www.linkedin.com/pulse/beyond-creepy-chart-note-why-n1-personalization-failing-haldipur-elvtc/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "The Invisible Burden: Protecting Your Transformation Agents",
+          "url": "https://www.linkedin.com/pulse/invisible-burden-protecting-your-transformation-agents-silvi-haldipur-zojue/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "Beyond Control: Building Adaptive Workplace Cultures",
+          "url": "https://www.linkedin.com/pulse/beyond-control-building-adaptive-workplace-cultures-silvi-haldipur-zy9pe/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "Strategy as Art: Why Creative Minds Are Our Greatest Strategic Asset",
+          "url": "https://www.linkedin.com/pulse/strategy-art-why-creative-minds-our-greatest-asset-silvi-haldipur-uemje/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "The Experience Mirage: An Executive Guide to Spotting Real Customer Experience vs. Department Theater",
+          "url": "https://www.linkedin.com/pulse/experience-mirage-guide-spotting-real-customer-vs-theater-haldipur-qvtde/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "Transforming Lives Through Exceptional Customer Experience",
+          "url": "https://www.linkedin.com/pulse/transforming-lives-through-exceptional-customer-silvi-haldipur-teeue/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        },
+        {
+          "@type": "Article",
+          "headline": "Why Customer Experience is the Hardest Transformation to Achieve in Organizations",
+          "url": "https://www.linkedin.com/pulse/why-customer-experience-hardest-transformation-achieve-silvi-haldipur-kwfae/",
+          "author": {
+            "@id": "https://silvihaldipur.com/#silvi"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -29,9 +29,10 @@
   --oxblood:     #78281F;
   --oxblood-deep: #5C1E17;  /* CTA hover state */
   --sienna:      #B8593A;
-  --coral:       #C9633F;  /* alias: --coral-sienna */
-  --coral-sienna: #C9633F;  /* Answer-lead borders, accent labels. */
-  --coral-light: #E89472;  /* Italic emphasis on dark grounds. */
+  --coral:       #C9633F;  /* Bright rust — DISPLAY use only (>=24px). Fails 4.5:1 on cream (3.39). */
+  --coral-sienna: #A84A2A;  /* Body-size accent on cream (4.92:1 on cream — AA). */
+  --coral-display: #C9633F; /* Alias for the bright rust used on large numerals. */
+  --coral-light: #E89472;   /* Body-size accent on warm-black bleed (7.18:1 — AA). */
   --warm-black:  #2B1810;
   --warm-brown:  #4A2B1F;
   --ink:         #2B1810;  /* Body type on cream, dark section ground. */
@@ -226,14 +227,14 @@ p, .p {
 .paper .pull { color: var(--teal); }
 
 /* ---------- Metadata / eyebrow labels ----------
-   Per design brief: 11px, uppercase, letter-spacing 0.18em, in oxblood.
-   Editorial register — small caps-style eyebrows above sections, in brand colour. */
+   Editorial register — small caps-style eyebrows above sections, in brand colour.
+   12px (up from 11) for legibility while staying compact. */
 .meta, .label, .num {
   font-family: var(--font-body);
   font-weight: var(--fw-body-medium);
-  font-size: 11px;
+  font-size: 12px;
   line-height: var(--lh-meta);
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--oxblood);
 }

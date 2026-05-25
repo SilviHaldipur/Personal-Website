@@ -1,5 +1,5 @@
 /* global React, Nav, Footer, PageShell, SectionLabel, HeroPortrait, Pillar,
-            CaseCard, EssayCard, LogoWall, Keynote, MetaRow,
+            CaseCard, CaseHeroCard, EssayCard, LogoWall, Keynote, MetaRow,
             AnswerLead, PerspectiveLink, PrimaryCTA, SecondaryCTA,
             useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakToggle, TweakSlider */
 const { useState, useEffect, useRef } = React;
@@ -66,7 +66,11 @@ const MODES = [
 const CASES = [
   {
     num: '01',
+    slug: 'co-creation',
     title: 'Building Merck’s first Center of Co-Creation.',
+    headline: 'A turnkey service for design research, sprints, and customer co-creation, running on agile cadence inside one of pharma’s largest commercial organizations.',
+    metric: '$1B+',
+    metricLabel: 'incremental revenue supported',
     theme: 'Building new functions',
     tenure: 'Merck',
     summary:
@@ -94,7 +98,11 @@ const CASES = [
   },
   {
     num: '02',
+    slug: 'sotatercept',
     title: 'Sotatercept PAH launch: collapsing time-to-treat in a rare, life-threatening disease.',
+    headline: 'A two-phase intervention model targeting five friction points in the patient journey — coordinated where it was fragmented, fast where it was slow.',
+    metric: '62.5%',
+    metricLabel: 'reduction in time-to-treat',
     theme: 'Launch excellence',
     tenure: 'Merck',
     summary:
@@ -122,7 +130,11 @@ const CASES = [
   },
   {
     num: '03',
+    slug: 'flonase',
     title: 'Flonase Rx-to-OTC: disrupting a $4B+ category dominated by oral antihistamines.',
+    headline: 'A digital-first launch built on consumer truth, with a proprietary social-listening platform that turned signal into commercial decision in real time — later commercialized by Experian.',
+    metric: '#1',
+    metricLabel: 'OTC allergy market share',
     theme: 'Category disruption',
     tenure: 'GSK',
     summary:
@@ -149,7 +161,11 @@ const CASES = [
   },
   {
     num: '04',
+    slug: 'accelerator',
     title: 'Global Human Health Digital Accelerator: embedding capability across six priority markets.',
+    headline: 'A four-pillar Center of Excellence and an end-to-end transformation roadmap, deployed market by market with a baseline assessment of 50+ digital capabilities.',
+    metric: 'Six',
+    metricLabel: 'priority markets transformed',
     theme: 'Operating model redesign',
     tenure: 'Merck',
     summary:
@@ -313,7 +329,7 @@ function Home({ navigate, portraitSrc }) {
         </p>
         <div className="sh-cases">
           {CASES.map((c) => (
-            <CaseCard key={c.num} {...c} onOpen={() => navigate('work', c.num)} />
+            <CaseCard key={c.num} {...c} onOpen={() => navigate('work', c.slug)} />
           ))}
         </div>
       </section>
@@ -330,7 +346,7 @@ function Home({ navigate, portraitSrc }) {
         </div>
       </section>
 
-      <section className="sh-section" data-bleed="sienna">
+      <section className="sh-section" data-bleed="rose">
         <div className="sh-bleed-bg" aria-hidden="true"></div>
         <Keynote onMore={() => navigate('perspectives')} />
       </section>
@@ -452,14 +468,53 @@ function About({ navigate }) {
 /* ============================================================ */
 
 function Work({ focused, navigate }) {
-  const initial = CASES.find((c) => c.num === focused) || CASES[0];
+  const findBySlug = (s) => CASES.find((c) => c.slug === s || c.num === s);
+  const initial = findBySlug(focused) || CASES[0];
   const [open, setOpen] = useState(initial);
+  const detailRef = useRef(null);
+  const gridRef = useRef(null);
+
+  // Update from external focus prop (deep link via navigate)
   useEffect(() => {
     if (focused) {
-      const c = CASES.find((c) => c.num === focused);
+      const c = findBySlug(focused);
       if (c) setOpen(c);
     }
   }, [focused]);
+
+  // Listen to hashchange so /work#sotatercept-style links update the case
+  useEffect(() => {
+    const onHash = () => {
+      const hash = window.location.hash.replace(/^#/, '');
+      if (!hash) return;
+      const c = findBySlug(hash);
+      if (c) setOpen(c);
+    };
+    onHash();
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  // Smooth-scroll to detail after a card click
+  const openCase = (slug) => {
+    const c = findBySlug(slug);
+    if (!c) return;
+    setOpen(c);
+    if (window.location.hash !== `#${c.slug}`) {
+      history.replaceState(null, '', `#${c.slug}`);
+    }
+    requestAnimationFrame(() => {
+      detailRef.current && detailRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
+
+  const scrollToGrid = () => {
+    gridRef.current && gridRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const idx = CASES.findIndex((c) => c.num === open.num);
+  const next = CASES[(idx + 1) % CASES.length];
+  const prev = CASES[(idx - 1 + CASES.length) % CASES.length];
 
   return (
     <PageShell paper>
@@ -470,50 +525,58 @@ function Work({ focused, navigate }) {
           Four builds. Each one a capability brought into pharma commercial before consensus, designed around customer truth, and still running after the work was done.
         </p>
 
-        <div className="sh-work-grid">
-          <nav className="sh-work-nav" aria-label="Case studies">
-            <ul className="sh-case-list">
-              {CASES.map((c) => (
-                <li key={c.num}>
-                  <button
-                    className={`sh-case-listitem ${open.num === c.num ? 'is-open' : ''}`}
-                    onClick={() => setOpen(c)}
-                  >
-                    <span className="meta sh-case-listnum">Case {c.num}</span>
-                    <span className="sh-case-listtitle">{c.title.split(/\s—\s|:\s/)[0].replace(/\.$/, '')}</span>
-                    <span className="meta sh-case-listtheme">{c.theme}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
+        <div className="sh-casegrid" ref={gridRef}>
+          {CASES.map((c) => (
+            <CaseHeroCard
+              key={c.num}
+              {...c}
+              isOpen={open.num === c.num}
+              onOpen={openCase}
+            />
+          ))}
+        </div>
 
-          <section className="sh-case-detail" key={open.num}>
-            <div className="meta">Case {open.num}</div>
-            <h2 className="h2 sh-case-detail-title">{open.title}</h2>
-            <MetaRow items={[['Theme', open.theme], ['Tenure', open.tenure]]} />
+        <section className="sh-case-detail" ref={detailRef} id={`case-${open.slug}`} key={open.num}>
+          <div className="sh-case-detail-eyebrow">
+            <span className="sh-case-detail-num">Case {open.num}</span>
+            <span className="sh-case-detail-theme">{open.theme} · {open.tenure}</span>
+          </div>
+          <h2 className="h2 sh-case-detail-title">{open.title}</h2>
 
-            <div className="sh-case-prose">
-              {open.sections.map((s, i) => (
-                <div className="sh-case-prose-block" key={i}>
-                  <div className="meta sh-case-prose-h">{s.h}</div>
-                  <p>{s.p}</p>
+          <div className="sh-case-prose">
+            {open.sections.map((s, i) => (
+              <div className="sh-case-prose-block" key={i}>
+                <div className="meta sh-case-prose-h">{s.h}</div>
+                <p>{s.p}</p>
+              </div>
+            ))}
+          </div>
+
+          {open.figures && open.figures.length > 0 && (
+            <div className="sh-figures">
+              {open.figures.map(([n, l], i) => (
+                <div className="sh-figure" key={i}>
+                  <div className="sh-figure-n">{n}</div>
+                  <div className="sh-figure-l">{l}</div>
                 </div>
               ))}
             </div>
+          )}
 
-            {open.figures && open.figures.length > 0 && (
-              <div className="sh-figures">
-                {open.figures.map(([n, l], i) => (
-                  <div className="sh-figure" key={i}>
-                    <div className="sh-figure-n">{n}</div>
-                    <div className="sh-figure-l">{l}</div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        </div>
+          <nav className="sh-case-pager" aria-label="Case navigation">
+            <button type="button" className="sh-case-pager-back" onClick={scrollToGrid}>
+              <span className="sh-case-pager-arrow" aria-hidden="true">↑</span>
+              <span>Back to all cases</span>
+            </button>
+            <button type="button" className="sh-case-pager-next" onClick={() => openCase(next.slug)}>
+              <span className="sh-case-pager-meta">Next case · {next.theme}</span>
+              <span className="sh-case-pager-nexttitle">
+                {next.title.split(/:\s/)[0]}
+                <span className="sh-case-pager-arrow" aria-hidden="true">→</span>
+              </span>
+            </button>
+          </nav>
+        </section>
       </article>
     </PageShell>
   );
@@ -709,10 +772,29 @@ function App() {
 
   const navigate = (key, focus) => {
     setPage(key);
-    if (key === 'work' && focus) setFocusedCase(focus);
-    else setFocusedCase(null);
+    if (key === 'work' && focus) {
+      setFocusedCase(focus);
+      if (typeof window !== 'undefined') {
+        history.replaceState(null, '', `#${focus}`);
+      }
+    } else {
+      setFocusedCase(null);
+      if (typeof window !== 'undefined' && window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
+      }
+    }
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
+
+  // On mount: if URL hash matches a case slug, jump to Work page with that case open
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const hash = window.location.hash.replace(/^#/, '');
+    if (hash && CASES.some((c) => c.slug === hash)) {
+      setPage('work');
+      setFocusedCase(hash);
+    }
+  }, []);
 
   // expose for hero CTAs (rendered inside a component without prop drilling)
   useEffect(() => {
@@ -747,6 +829,7 @@ function App() {
 
   return (
     <div data-screen-label={screenLabel}>
+      <a href="#main" className="sh-skip-link">Skip to main content</a>
       <Nav active={page} onNavigate={navigate} />
       {body}
       <Footer onNavigate={navigate} />

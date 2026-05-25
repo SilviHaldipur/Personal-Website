@@ -14,7 +14,7 @@ function Nav({ active, onNavigate }) {
     ['contact', '05', 'Contact'],
   ];
   return (
-    <nav className="sh-nav">
+    <header className="sh-nav" role="banner">
       <a
         href="#home"
         className="sh-wordmark"
@@ -22,21 +22,24 @@ function Nav({ active, onNavigate }) {
       >
         Silvi Haldipur
       </a>
-      <ul className="sh-nav-items">
-        {items.map(([key, num, label]) => (
-          <li key={key}>
-            <a
-              href={`#${key}`}
-              className={`sh-nav-item ${active === key ? 'is-active' : ''}`}
-              onClick={(e) => { e.preventDefault(); onNavigate(key); }}
-            >
-              <span className="sh-nav-num">{num}</span>
-              <span className="sh-nav-label">{label}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+      <nav aria-label="Primary">
+        <ul className="sh-nav-items">
+          {items.map(([key, num, label]) => (
+            <li key={key}>
+              <a
+                href={`#${key}`}
+                className={`sh-nav-item ${active === key ? 'is-active' : ''}`}
+                aria-current={active === key ? 'page' : undefined}
+                onClick={(e) => { e.preventDefault(); onNavigate(key); }}
+              >
+                <span className="sh-nav-num" aria-hidden="true">{num}</span>
+                <span className="sh-nav-label">{label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
   );
 }
 
@@ -92,15 +95,15 @@ function Footer({ onNavigate }) {
 }
 
 function PageShell({ paper, children }) {
-  return <main className={paper ? 'sh-page paper' : 'sh-page'}>{children}</main>;
+  return <main id="main" className={paper ? 'sh-page paper' : 'sh-page'}>{children}</main>;
 }
 
 function SectionLabel({ num, children }) {
   return (
-    <div className="sh-section-label">
+    <h2 className="sh-section-label">
       <span className="sh-section-num">{num}</span>
       <span className="sh-section-name">{children}</span>
-    </div>
+    </h2>
   );
 }
 
@@ -125,10 +128,10 @@ function HeroPortrait({ portraitSrc }) {
           </SecondaryCTA>
         </div>
       </div>
-      <div className="sh-hero-field" aria-hidden="true">
-        <div className="sh-hero-mark">S H</div>
-        <div className="sh-hero-portrait" aria-label="Portrait of Silvi Haldipur">
-          <img src={portraitSrc} alt="Silvi Haldipur" />
+      <div className="sh-hero-field">
+        <div className="sh-hero-mark" aria-hidden="true">S H</div>
+        <div className="sh-hero-portrait">
+          <img src={portraitSrc} alt="Silvi Haldipur, commercial executive in life sciences and consumer health." />
         </div>
       </div>
     </section>
@@ -143,6 +146,34 @@ function Pillar({ num, title, children }) {
       <h3 className="sh-pillar-title">{title}</h3>
       <p className="sh-pillar-body">{children}</p>
     </div>
+  );
+}
+
+/* ---------- Case hero card (Work page 2x2 grid) ---------- */
+function CaseHeroCard({ num, slug, title, headline, metric, metricLabel, theme, isOpen, onOpen }) {
+  return (
+    <button
+      type="button"
+      className={`sh-casehero ${isOpen ? 'is-open' : ''}`}
+      onClick={() => onOpen && onOpen(slug)}
+      aria-expanded={isOpen}
+    >
+      <div className="sh-casehero-top">
+        <span className="sh-casehero-num">Case {num}</span>
+        <span className="sh-casehero-theme">{theme}</span>
+      </div>
+      <h3 className="sh-casehero-title">{title}</h3>
+      <p className="sh-casehero-headline">{headline}</p>
+      <div className="sh-casehero-bottom">
+        <div className="sh-casehero-metric">
+          <div className="sh-casehero-metric-n">{metric}</div>
+          <div className="sh-casehero-metric-l">{metricLabel}</div>
+        </div>
+        <span className="sh-casehero-cta">
+          Read the case <span className="sh-casehero-arrow" aria-hidden="true">→</span>
+        </span>
+      </div>
+    </button>
   );
 }
 
@@ -293,6 +324,6 @@ function MetaRow({ items }) {
 Object.assign(window, {
   Nav, Footer, PageShell, SectionLabel,
   HeroPortrait, Pillar,
-  CaseCard, EssayCard, LogoWall, Keynote, MetaRow,
+  CaseCard, CaseHeroCard, EssayCard, LogoWall, Keynote, MetaRow,
   AnswerLead, PerspectiveLink, PrimaryCTA, SecondaryCTA,
 });

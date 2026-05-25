@@ -1,6 +1,78 @@
 @import url('colors_and_type.css');
 
 /* ============================================================
+   Accessibility — focus-visible + skip-link
+   ============================================================ */
+:focus { outline: 0; }
+:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.sh-cta--primary:focus-visible {
+  outline-color: var(--cream);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--oxblood);
+}
+[data-bleed] :focus-visible {
+  outline-color: var(--bleed-accent, var(--cream));
+}
+.sh-skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--oxblood);
+  color: var(--cream);
+  padding: 12px 18px;
+  border-radius: 2px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  z-index: 100;
+  transform: translateY(-200%);
+  transition: transform 150ms ease;
+}
+.sh-skip-link:focus,
+.sh-skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--cream);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Text wrap defaults — editorial line-break behavior
+   ============================================================ */
+/* Long-form body paragraphs: avoid orphans and short last lines */
+p, dd, li, .sh-article p, .sh-case-prose p {
+  text-wrap: pretty;
+}
+/* Short descriptive subheads / ledes: balance lines so phrases stay whole.
+   Browsers limit balance to ~6 lines, so this is safe on 1-4 line blocks. */
+.sh-hero-sub,
+.sh-section-lede,
+.sh-pillars-lede,
+.sh-article-lede,
+.sh-credential-body,
+.sh-casehero-headline,
+.sh-answer-lead-body,
+.sh-writing-lede,
+.sh-keynote-coda,
+.sh-pillar-body,
+.sh-launch-body {
+  text-wrap: balance;
+}
+
+/* ============================================================
    silvi.haldipur.com — page styles
    ============================================================ */
 
@@ -24,9 +96,9 @@ html, body { background: var(--navy); }
   background: color-mix(in srgb, var(--paper) 92%, transparent);
   border-bottom-color: var(--rule-ink);
 }
-:root[data-ground="bone"] .sh-nav .sh-wordmark,
-:root[data-ground="bone"] .sh-nav .sh-nav-item.is-active { color: var(--charcoal); }
-:root[data-ground="bone"] .sh-nav .sh-nav-item { color: var(--slate-ink); }
+:root[data-ground="bone"] .sh-nav .sh-wordmark { color: var(--oxblood); }
+:root[data-ground="bone"] .sh-nav .sh-nav-item { color: var(--ink-soft); }
+:root[data-ground="bone"] .sh-nav .sh-nav-item.is-active { color: var(--oxblood); }
 :root[data-ground="bone"] .sh-page:not(.paper) .sh-section-label { border-top-color: var(--rule-ink); }
 :root[data-ground="bone"] .sh-page:not(.paper) .sh-section-num,
 :root[data-ground="bone"] .sh-page:not(.paper) .sh-section-name { color: var(--slate-ink); }
@@ -45,7 +117,7 @@ html, body { background: var(--navy); }
 :root[data-ground="bone"] .sh-page:not(.paper) .sh-case:last-child { border-bottom-color: var(--rule-ink); }
 :root[data-ground="bone"] .sh-page:not(.paper) .sh-case-num { color: var(--slate-ink); }
 :root[data-ground="bone"] .sh-page:not(.paper) .on-navy .sh-logo { color: var(--slate-ink); }
-:root[data-ground="bone"] .sh-page:not(.paper) .sh-keynote-quote { color: var(--teal); }
+/* sh-keynote-quote color handled by [data-bleed] overrides below — no global default */
 :root[data-ground="bone"] .sh-page:not(.paper) .sh-hero-cta { color: var(--charcoal); border-bottom-color: var(--underline-ink); }
 
 /* Hide CTAs / status when toggled off */
@@ -87,29 +159,54 @@ body[data-show-status="0"] .sh-hero-tag { display: none; }
   justify-content: flex-end;
 }
 .sh-nav-item {
+  position: relative;
   display: inline-flex; gap: 8px; align-items: baseline;
   font-family: var(--font-body);
   font-size: 13px; font-weight: 500;
-  color: var(--warm-black);
+  color: var(--ink-soft);
   border-bottom: 0;
   padding-bottom: 2px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  transition: color 150ms ease;
 }
 .sh-nav-item:hover { color: var(--oxblood); border-bottom: 0; }
-.sh-nav-item.is-active { color: var(--oxblood); }
-.sh-nav-num { color: var(--oxblood); opacity: 1; }
+.sh-nav-num { color: var(--coral-sienna); font-weight: 500; transition: color 150ms ease; }
+.sh-nav-label { transition: color 150ms ease; }
+
+/* Active state — editorial: small filled marker before the number, oxblood,
+   slightly heavier weight, and a hairline underline on the label. */
+.sh-nav-item.is-active { color: var(--oxblood); font-weight: 600; }
+.sh-nav-item.is-active .sh-nav-num { color: var(--oxblood); }
+.sh-nav-item.is-active .sh-nav-label {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  padding-bottom: 2px;
+}
+.sh-nav-item.is-active::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--oxblood);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
 
 .paper .sh-nav,
 body:has(.sh-page.paper) .sh-nav {
   background: color-mix(in srgb, var(--paper) 92%, transparent);
   border-bottom-color: var(--rule-ink);
 }
-body:has(.sh-page.paper) .sh-nav .sh-wordmark { color: var(--charcoal); }
-body:has(.sh-page.paper) .sh-nav .sh-nav-item { color: var(--slate-ink); }
-body:has(.sh-page.paper) .sh-nav .sh-nav-item.is-active { color: var(--charcoal); }
-body:has(.sh-page.paper) .sh-nav .sh-nav-item:hover { color: var(--teal); }
-body:has(.sh-page.paper) .sh-nav .sh-wordmark:hover { color: var(--teal); }
+body:has(.sh-page.paper) .sh-nav .sh-wordmark { color: var(--oxblood); }
+body:has(.sh-page.paper) .sh-nav .sh-nav-item { color: var(--ink-soft); }
+body:has(.sh-page.paper) .sh-nav .sh-nav-item.is-active { color: var(--oxblood); }
+body:has(.sh-page.paper) .sh-nav .sh-nav-item:hover { color: var(--oxblood); }
+body:has(.sh-page.paper) .sh-nav .sh-wordmark:hover { color: var(--oxblood-deep); }
 
 /* ---------- Hero ---------- */
 .sh-hero {
@@ -266,7 +363,7 @@ body:has(.sh-page.paper) .sh-nav .sh-wordmark:hover { color: var(--teal); }
 .paper .sh-lede-2,
 :root[data-ground="bone"] .sh-lede-2 { color: var(--slate-ink); }
 
-.sh-section-lede { color: var(--bone-70); font-size: 18px; line-height: 1.6; margin: 0 0 48px; max-width: 88ch; }
+.sh-section-lede { color: var(--bone-70); font-size: 18px; line-height: 1.6; margin: 0 0 48px; max-width: 62ch; }
 :root[data-ground="bone"] .sh-section-lede { color: var(--slate-ink); }
 
 /* ---------- Pillars ---------- */
@@ -437,17 +534,17 @@ body:has(.sh-page.paper) .sh-nav .sh-wordmark:hover { color: var(--teal); }
 .sh-keynote-quote {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 300;
+  font-weight: 400;
   font-size: clamp(28px, 3.6vw, 46px);
   line-height: 1.2;
   letter-spacing: -0.012em;
-  color: var(--teal-on-navy);
+  color: var(--coral-light);
   margin: 0;
   max-width: 22ch;
   text-wrap: balance;
 }
-:root[data-ground="bone"] .sh-keynote-quote { color: var(--teal); }
-.paper .sh-keynote-quote { color: var(--teal); }
+/* On cream paper (Perspectives keynote block, when not inside a bleed) — use oxblood */
+.paper .sh-keynote-quote { color: var(--oxblood); }
 .sh-keynote-meta {
   display: flex; flex-direction: column; gap: 6px;
 }
@@ -514,7 +611,7 @@ body:has(.sh-page.paper) .sh-nav .sh-wordmark:hover { color: var(--teal); }
 .sh-article-lede {
   color: var(--charcoal);
   margin: 0 0 64px;
-  max-width: 50ch;
+  max-width: 56ch;
   font-size: 22px;
   line-height: 1.5;
   font-family: var(--font-body);
@@ -1034,14 +1131,14 @@ body:has(.sh-page.paper) .sh-nav .sh-wordmark:hover { color: var(--teal); }
   --bleed-bg: var(--warm-black);
   --bleed-fg: var(--cream);
   --bleed-fg-muted: var(--bone-70);
-  --bleed-accent: var(--coral);
+  --bleed-accent: var(--coral-light);
   --bleed-rule: rgba(245, 237, 226, 0.18);
 }
 [data-bleed="rose"] {
   --bleed-bg: var(--oxblood);
   --bleed-fg: var(--cream);
   --bleed-fg-muted: rgba(245, 237, 226, 0.82);
-  --bleed-accent: var(--coral);
+  --bleed-accent: var(--coral-light);
   --bleed-rule: rgba(245, 237, 226, 0.22);
 }
 [data-bleed="lavender"] {
@@ -1378,10 +1475,10 @@ body:has(.sh-page.paper) .sh-nav .sh-wordmark:hover { color: var(--teal); }
 .sh-hero-accent { color: var(--oxblood); font-style: italic; }
 .sh-hero-sub {
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.65;
   color: var(--ink-soft);
-  max-width: 50ch;
+  max-width: 44ch;
   margin: 0 0 48px;
 }
 .sh-hero-ctas {
@@ -1404,7 +1501,7 @@ body:has(.sh-page.paper) .sh-nav .sh-wordmark:hover { color: var(--teal); }
   font-family: var(--font-display);
   font-size: 18px;
   font-weight: 400;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.18em;
   color: var(--cream);
   opacity: 0.85;
   z-index: 2;
@@ -1437,5 +1534,289 @@ body:has(.sh-page.paper) .sh-nav .sh-wordmark:hover { color: var(--teal); }
   .sh-hero-portrait { right: 32px; bottom: 32px; width: 70%; }
   .sh-hero-text { padding: 56px 24px; }
   .sh-hero-statement { font-size: 36px; }
+}
+
+/* ============================================================
+   Work — Case grid (2x2) + detail (v2)
+   ============================================================ */
+.sh-casegrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  margin: 0 0 96px;
+}
+@media (max-width: 720px) {
+  .sh-casegrid { grid-template-columns: 1fr; gap: 20px; }
+}
+
+.sh-casehero {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--paper);
+  border: 1px solid var(--rule-ink);
+  border-radius: 4px;
+  padding: 32px;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 220ms ease, background-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+.sh-casehero::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--coral-sienna);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+.sh-casehero:hover {
+  border-color: var(--oxblood);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -16px rgba(43, 24, 16, 0.18);
+}
+.sh-casehero:hover::before,
+.sh-casehero.is-open::before { opacity: 1; }
+.sh-casehero:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 2px;
+}
+.sh-casehero.is-open {
+  border-color: var(--oxblood);
+  background: color-mix(in srgb, var(--oxblood) 4%, var(--paper));
+}
+
+.sh-casehero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.sh-casehero-num {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--coral-sienna);
+}
+.sh-casehero-theme {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--ink-soft);
+  opacity: 0.7;
+  text-align: right;
+}
+.sh-casehero-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+  text-wrap: balance;
+  transition: color 220ms ease;
+}
+.sh-casehero:hover .sh-casehero-title,
+.sh-casehero.is-open .sh-casehero-title { color: var(--oxblood); }
+.sh-casehero-headline {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.sh-casehero-bottom {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule-ink);
+}
+.sh-casehero-metric { display: flex; flex-direction: column; gap: 4px; }
+.sh-casehero-metric-n {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--coral-display);
+}
+.sh-casehero-metric-l {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  opacity: 0.85;
+  max-width: 22ch;
+}
+.sh-casehero-cta {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--oxblood);
+  white-space: nowrap;
+  display: inline-flex;
+  gap: 6px;
+  align-items: baseline;
+}
+.sh-casehero-arrow {
+  display: inline-block;
+  transition: transform 220ms ease;
+}
+.sh-casehero:hover .sh-casehero-arrow { transform: translateX(4px); }
+
+/* Case detail (below the grid). Overrides the legacy rules above. */
+.sh-case-detail {
+  scroll-margin-top: 96px;
+  padding-top: 56px;
+  border-top: 1px solid var(--rule-ink);
+  min-width: 0;
+}
+.sh-case-detail-eyebrow {
+  display: flex;
+  gap: 24px;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+.sh-case-detail-num,
+.sh-case-detail-theme {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+.sh-case-detail-num { color: var(--coral-sienna); }
+.sh-case-detail-theme { color: var(--ink-soft); opacity: 0.75; }
+.sh-case-detail-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3.2vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+  margin: 0 0 56px;
+  max-width: 24ch;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.sh-case-prose-h {
+  color: var(--coral-sienna);
+  letter-spacing: 0.16em;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding-top: 4px;
+}
+.sh-case-detail .sh-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 32px;
+  padding: 32px 0;
+  border-top: 1px solid var(--rule-ink);
+  border-bottom: 1px solid var(--rule-ink);
+  margin-bottom: 48px;
+}
+.sh-case-detail .sh-figure-n {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--coral-display);
+}
+.sh-case-detail .sh-figure-l {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+/* Pager */
+.sh-case-pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 24px;
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule-ink);
+}
+.sh-case-pager-back,
+.sh-case-pager-next {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 12px 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--oxblood);
+  transition: color 150ms ease;
+}
+.sh-case-pager-back:hover,
+.sh-case-pager-next:hover { color: var(--oxblood-deep); }
+.sh-case-pager-next {
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  text-align: right;
+  text-transform: none;
+  letter-spacing: 0;
+  max-width: 380px;
+}
+.sh-case-pager-meta {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--coral-sienna);
+}
+.sh-case-pager-nexttitle {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--oxblood);
+  display: inline-flex;
+  gap: 10px;
+  align-items: baseline;
+  text-wrap: balance;
+}
+.sh-case-pager-arrow { display: inline-block; transition: transform 150ms ease; }
+.sh-case-pager-back:hover .sh-case-pager-arrow { transform: translateY(-2px); }
+.sh-case-pager-next:hover .sh-case-pager-arrow { transform: translateX(4px); }
+
+@media (max-width: 720px) {
+  .sh-case-pager { flex-direction: column; gap: 24px; }
+  .sh-case-pager-next { align-items: flex-start; text-align: left; max-width: 100%; }
 }
 
